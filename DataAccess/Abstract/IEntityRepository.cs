@@ -5,7 +5,7 @@ using System.Text;
 
 namespace DataAccess.Abstract
 {
-    public interface IEntityRepository<T>
+    public interface IEntityRepository<T> where T:class // class referenas tip değerler alması için where koşulu eklendi.
     {
         List<T> GetAll(Expression<Func<T,bool>> filter = null); // expression yapısı p=>p.Id yi kullanabilmek için Expression yapısı 
         // refactoring
