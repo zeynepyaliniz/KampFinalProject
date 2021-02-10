@@ -1,4 +1,5 @@
 ﻿using Core.Entities;
+using Core.Utilities.Results;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -12,10 +13,12 @@ namespace Core.DataAccess
         List<T> GetAll(Expression<Func<T,bool>> filter = null); // expression yapısı p=>p.Id yi kullanabilmek için Expression yapısı 
         // refactoring
         T Get(Expression<Func<T, bool>> filter);
-        void Add(T entity);
+        IResult Add(T entity);
         void Update(T entity);
         void Delete(T entity);
         List<T> GetAllByCategory(Expression<Func<T, bool>> filter = null);
+        T GetById(Expression<Func<T, bool>> filter);
+        T GetProductDetails();
 
     }
 }
