@@ -58,10 +58,10 @@ namespace Business.Concrete
 
         IDataResult<List<Product>> IProductService.GetAll()
         {
-            if (DateTime.Now.Hour.Equals(22))
-            {
-                return new ErrorDataResult<List<Product>>(Messages.MaintenanceTime);
-            }
+            //if (DateTime.Now.Hour.Equals(22))
+            //{
+            //    return new ErrorDataResult<List<Product>>(Messages.MaintenanceTime);
+            //}
 
             return new SuccessDataResult<List<Product>>(_productDal.GetAll(), true, Messages.ProductListed);
 

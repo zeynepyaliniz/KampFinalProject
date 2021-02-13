@@ -4,23 +4,23 @@ using System.Text;
 
 namespace Core.Utilities.Results
 {
-    public class SuccessDataResult<T> : SuccessDataResult<T>
+    public class SuccessDataResult_<T> : SuccessDataResult<T>
     {
-        public SuccessDataResult(T data,string message): base(data,true,message)
+        public SuccessDataResult_(T data,string message): base(data,true,message)
         {
 
         }
-        public SuccessDataResult(T data): base(data,true)
-        {
-
-        }
-
-        public SuccessDataResult(string message): base(default,true,message)
+        public SuccessDataResult_(T data): base(data,true)
         {
 
         }
 
-        public SuccessDataResult(): base(default,true)
+        public SuccessDataResult_(string message): base(default,true,message)
+        {
+
+        }
+
+        public SuccessDataResult_(): base(default,true)
         {
 
         }

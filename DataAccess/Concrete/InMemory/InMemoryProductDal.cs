@@ -1,4 +1,6 @@
-﻿using DataAccess.Abstract;
+﻿using Core.DataAccess;
+using Core.Utilities.Results;
+using DataAccess.Abstract;
 using Entities.Concrete;
 using System;
 using System.Collections.Generic;
@@ -67,6 +69,21 @@ namespace DataAccess.Concrete.InMemory
         }
 
         public List<Product> GetAllByCategory(Expression<Func<Product, bool>> filter = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        IResult IEntityRepository<Product>.Add(Product entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Product GetById(Expression<Func<Product, bool>> filter)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Product GetProductDetails()
         {
             throw new NotImplementedException();
         }

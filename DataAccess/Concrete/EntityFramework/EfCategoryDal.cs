@@ -1,4 +1,6 @@
-﻿using DataAccess.Abstract;
+﻿using Core.DataAccess;
+using Core.Utilities.Results;
+using DataAccess.Abstract;
 using Entities.Concrete;
 using System;
 using System.Collections.Generic;
@@ -34,7 +36,22 @@ namespace DataAccess.Concrete.EntityFramework
             throw new NotImplementedException();
         }
 
+        public Category GetById(Expression<Func<Category, bool>> filter)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Category GetProductDetails()
+        {
+            throw new NotImplementedException();
+        }
+
         public void Update(Category entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        IResult IEntityRepository<Category>.Add(Category entity)
         {
             throw new NotImplementedException();
         }

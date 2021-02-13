@@ -6,7 +6,7 @@ namespace Core.Utilities.Results
 {
     public class ErrorDataResult<T>: SuccessDataResult<T>
     {
-        , public ErrorDataResult(T data, string message) : base(data, false, message)
+        public ErrorDataResult(T data, string message) : base(data, false, message)
         {
 
         }

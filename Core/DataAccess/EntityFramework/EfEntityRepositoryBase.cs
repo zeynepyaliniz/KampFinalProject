@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq.Expressions;
 using System.Linq;
+using Core.Utilities.Results;
 
 namespace Core.DataAccess.EntityFramework
 {
@@ -66,6 +67,16 @@ namespace Core.DataAccess.EntityFramework
             }
         }
 
+        public TEntity GetById(Expression<Func<TEntity, bool>> filter)
+        {
+            throw new NotImplementedException();
+        }
+
+        public TEntity GetProductDetails()
+        {
+            throw new NotImplementedException();
+        }
+
         public void Update(TEntity entity)
         {
             using (TContextEntity context = new TContextEntity())
@@ -75,6 +86,11 @@ namespace Core.DataAccess.EntityFramework
                 context.SaveChanges();
 
             }
+        }
+
+        IResult IEntityRepository<TEntity>.Add(TEntity entity)
+        {
+            throw new NotImplementedException();
         }
     }
 }
