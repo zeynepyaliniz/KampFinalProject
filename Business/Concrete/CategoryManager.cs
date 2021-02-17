@@ -1,6 +1,5 @@
 ﻿using Business.Abstract;
 using DataAccess.Abstract;
-using DataAccess.Concrete.EntityFramework;
 using Entities.Concrete;
 using System;
 using System.Collections.Generic;
@@ -10,24 +9,23 @@ namespace Business.Concrete
 {
     public class CategoryManager : ICategoryService
     {
-        private readonly EfCategoryDal categoryDal;
-        public CategoryManager(EfCategoryDal _categoryDal)
+        ICategoryDal _categoryDal;
+
+        public CategoryManager(ICategoryDal categoryDal)
         {
-            categoryDal = _categoryDal;
+            _categoryDal = categoryDal;
         }
+
         public List<Category> GetAll()
         {
-            throw new NotImplementedException();
+            //İş kodları
+            return _categoryDal.GetAll();
         }
 
-        public List<Category> GetAllByCategoryId(int Id)
+        //Select * from Categories where CategoryId = 3
+        public Category GetById(int categoryId)
         {
-            throw new NotImplementedException();
-        }
-
-        public List<Category> GetByUnitPrice(decimal min, decimal max)
-        {
-            throw new NotImplementedException();
+            return _categoryDal.Get(c=>c.CategoryId == categoryId);
         }
     }
 }

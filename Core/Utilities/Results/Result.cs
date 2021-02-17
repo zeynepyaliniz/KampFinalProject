@@ -6,19 +6,17 @@ namespace Core.Utilities.Results
 {
     public class Result : IResult
     {
-        public Result(bool isSuccess, string message): this(isSuccess) // iki constructer da çalışsın... tek parametreli ctorda çalışır durumda. base constructer örneği.
-        {
-            this.Message = message; 
-            /* get readonlydir constructerda set edilebilir. 
-             * constructer'da set edilmesi için prop sadece get verildi.
-             * amaç sınırlamak ve standardize etmektir.*/
 
-        }
-        // overloading
-        public Result(bool isSuccess)
+        public Result(bool success, string message):this(success)
         {
-            Success = isSuccess;
+            Message = message;
         }
+
+        public Result(bool success)
+        {
+            Success = success;
+        }
+
         public bool Success { get; }
 
         public string Message { get; }
