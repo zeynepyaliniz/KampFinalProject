@@ -3,12 +3,14 @@ using Business.Constants;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Validation;
 using Core.CrossCuttingConserns.Validator;
+using Core.Utilities.Business;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using DataAccess.Concrete.InMemory;
 using Entities.Concrete;
 using Entities.DTOs;
 using FluentValidation;
+using Microsoft.EntityFrameworkCore.Internal;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -31,10 +33,24 @@ namespace Business.Concrete
         {
             //business codes
             //validation
-            ValidationTool.Validate(new ProductValidator(), product);
-            _productDal.Add(product);
+            //ValidationTool.Validate(new ProductValidator(), product);
+            BusinessRules.Run(
+                CheckRepeatedProductNameCorrect(product.ProductName),
+                CheckIfProductCountOfCategoryCorrect(product.CategoryId)
+                );
+            if (CheckRepeatedProductNameCorrect(product.ProductName).Success)
+            {
+                if (CheckIfProductCountOfCategoryCorrect(product.CategoryId).Success)
+                {
+                    _productDal.Add(product);
 
-            return new SuccessResult(Messages.ProductAdded);
+                    return new SuccessResult(Messages.ProductAdded);
+                }
+
+            }
+            return new ErrorResult();
+
+
         }
 
 
@@ -70,6 +86,25 @@ namespace Business.Concrete
                 return new ErrorDataResult<List<ProductDetailDto>>(Messages.MaintenanceTime);
             }
             return new SuccessDataResult<List<ProductDetailDto>>(_productDal.GetProductDetails());
+        }
+        private IResult CheckIfProductCountOfCategoryCorrect(int categoryId)
+        {
+            var result = _productDal.GetAll(p => p.CategoryId == categoryId).Count;
+            if (result >= 10)
+            {
+                return new ErrorResult(Messages.ProductCountOfCategoryError + 10);
+            }
+            return new SuccessResult();
+        }
+
+        private IResult CheckRepeatedProductNameCorrect(string productName)
+        {
+            var result = _productDal.GetAll(p => p.ProductName == productName).Any();
+            if (result)
+            {
+                return new ErrorResult(Messages.ProductNameAlreadyExist);
+            }
+            return new SuccessResult();
         }
     }
 }
