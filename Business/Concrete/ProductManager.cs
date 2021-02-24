@@ -22,10 +22,12 @@ namespace Business.Concrete
     public class ProductManager : IProductService
     {
         IProductDal _productDal;
+        ICategoryService _categoryService;
 
-        public ProductManager(IProductDal productDal)
+        public ProductManager(IProductDal productDal, ICategoryService categoryService)
         {
             _productDal = productDal;
+            _categoryService = categoryService;
         }
 
         [ValidationAspect(typeof(IValidator))] //autofac
@@ -36,20 +38,12 @@ namespace Business.Concrete
             //ValidationTool.Validate(new ProductValidator(), product);
             BusinessRules.Run(
                 CheckRepeatedProductNameCorrect(product.ProductName),
-                CheckIfProductCountOfCategoryCorrect(product.CategoryId)
+                CheckIfProductCountOfCategoryCorrect(product.CategoryId),
+                CheckCountOfCategoryCorrect()
                 );
-            if (CheckRepeatedProductNameCorrect(product.ProductName).Success)
-            {
-                if (CheckIfProductCountOfCategoryCorrect(product.CategoryId).Success)
-                {
-                    _productDal.Add(product);
 
-                    return new SuccessResult(Messages.ProductAdded);
-                }
-
-            }
-            return new ErrorResult();
-
+            _productDal.Add(product);
+            return new SuccessResult(Messages.ProductAdded);
 
         }
 
@@ -99,12 +93,22 @@ namespace Business.Concrete
 
         private IResult CheckRepeatedProductNameCorrect(string productName)
         {
-            var result = _productDal.GetAll(p => p.ProductName == productName).Any();
-            if (result)
+            var result = _productDal.GetAll(p => p.ProductName == productName).Count;
+            if (result > 0)
             {
                 return new ErrorResult(Messages.ProductNameAlreadyExist);
             }
             return new SuccessResult();
+        }
+        private IResult CheckCountOfCategoryCorrect()
+        {
+            var result = _categoryService.GetAll();
+            if (result.Data.Count >= 15)
+            {
+                return new ErrorResult(Messages.CategoryCountLimitation + 15);
+            }
+            return new SuccessResult();
+
         }
     }
 }

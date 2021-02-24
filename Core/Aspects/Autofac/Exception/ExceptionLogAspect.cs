@@ -1,5 +1,8 @@
 ﻿using Castle.DynamicProxy;
+using Core.CrossCuttingConserns.Logging;
+using Core.CrossCuttingConserns.Logging.Log4Net;
 using Core.Utilities.Interceptors;
+using Core.Utilities.Messages;
 using System;
 using System.Collections.Generic;
 using System.Text;
