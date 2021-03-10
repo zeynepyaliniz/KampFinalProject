@@ -42,6 +42,7 @@ namespace WebAPI
             services.AddControllers();
             //services.AddSingleton<IProductService,ProductManager>();
             //services.AddSingleton<IProductDal, EfProductDal>();
+            services.AddCors();
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
@@ -72,7 +73,7 @@ namespace WebAPI
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            app.UseCors(builder=>builder.WithOrigins("http://localhost:60798/", "http://localhost:61158/").AllowAnyHeader());
             app.UseHttpsRedirection();
 
             app.UseRouting();
